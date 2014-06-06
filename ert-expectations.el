@@ -558,6 +558,16 @@ If 'all, execute all expectations blocks in current file.
 If other non-nil value, execute current expectations block."
   :group 'ert-expectations)
 
+(defmacro with-ert-expectattions (&rest body)
+  "Convenient macro to define a set of expectations and run it
+immediately. An alternative to `expectations-eval-defun', which
+seems a little heavy to me.
+
+ BODY should be a list of `expect' expressions."
+  `(progn (expectations
+            ,@body)
+          (expectations-execute)))
+
 (defun expectations-eval-defun (arg)
   "Do `eval-defun'.
 If `expectations-execute-at-once' is non-nil, execute expectations if it is an expectations form."
