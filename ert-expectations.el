@@ -564,9 +564,11 @@ immediately. An alternative to `expectations-eval-defun', which
 seems a little heavy to me.
 
  BODY should be a list of `expect' expressions."
-  `(progn (expectations
-            ,@body)
-          (expectations-execute)))
+  `(dont-compile
+     (when (fboundp 'expectations)
+       (expectations
+         ,@body)
+       (expectations-execute))))
 (put 'with-ert-expectations 'lisp-indent-function 0)
 
 (defun expectations-eval-defun (arg)
